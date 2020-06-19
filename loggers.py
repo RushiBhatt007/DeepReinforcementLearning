@@ -1,5 +1,5 @@
 
-from utils import setup_logger
+from utils import setup_logger, setup_stream_logger
 from settings import run_folder
 
 ### SET all LOGGER_DISABLED to True to disable logging
@@ -28,3 +28,4 @@ logger_memory.disabled = LOGGER_DISABLED['memory']
 logger_model = setup_logger('logger_model', run_folder + 'logs/logger_model.log')
 logger_model.disabled = LOGGER_DISABLED['model']
  
+logger_play_game = setup_stream_logger('logger_play_game')
