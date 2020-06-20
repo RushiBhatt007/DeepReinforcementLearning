@@ -4,8 +4,7 @@ import logging
 import config
 import numpy as np
 
-if not config.CLN:
-	import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 
 from keras.models import Sequential, load_model, Model
 from keras.layers import Input, Dense, Conv2D, Flatten, BatchNormalization, Activation, LeakyReLU, add
@@ -81,7 +80,7 @@ class Gen_Model():
 	
 				try:
 					fig = plt.figure(figsize=(3, len(x)))  # width, height in inches
-					for i in xrange(len(x)):
+					for i in range(len(x)):
 						sub = fig.add_subplot(len(x), 1, i + 1)
 						if i == 0:
 							clim = (0,2)

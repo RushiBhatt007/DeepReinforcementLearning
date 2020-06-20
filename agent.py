@@ -11,10 +11,9 @@ import config
 import loggers as lg
 import time
 
-if not config.CLN:
-        import matplotlib.pyplot as plt
-        from IPython import display
-        import pylab as pl
+import matplotlib.pyplot as plt
+from IPython import display
+import pylab as pl
 
 
 class User():
@@ -25,9 +24,6 @@ class User():
 
 	def act(self, state, tau):
 		action = input('Enter your chosen action: ')
-		while action not in state.allowedActions:
-		        print "Action %s is not allowed." % action
-		        action = input('Enter your chosen action: ')
 		pi = np.zeros(self.action_size)
 		pi[action] = 1
 		value = None
@@ -190,7 +186,7 @@ class Agent():
 		lg.logger_mcts.info('******RETRAINING MODEL******')
 
 
-		for i in xrange(config.TRAINING_LOOPS):
+		for i in range(config.TRAINING_LOOPS):
 			minibatch = random.sample(ltmemory, min(config.BATCH_SIZE, len(ltmemory)))
 
 			training_states = np.array([self.model.convertToModelInput(row['state']) for row in minibatch])
@@ -204,17 +200,16 @@ class Agent():
 			self.train_value_loss.append(round(fit.history['value_head_loss'][config.EPOCHS - 1],4)) 
 			self.train_policy_loss.append(round(fit.history['policy_head_loss'][config.EPOCHS - 1],4)) 
 
-                if not config.CLN:
-			plt.plot(self.train_overall_loss, 'k')
-			plt.plot(self.train_value_loss, 'k:')
-			plt.plot(self.train_policy_loss, 'k--')
+		plt.plot(self.train_overall_loss, 'k')
+		plt.plot(self.train_value_loss, 'k:')
+		plt.plot(self.train_policy_loss, 'k--')
 
-			plt.legend(['train_overall_loss', 'train_value_loss', 'train_policy_loss'], loc='lower left')
+		plt.legend(['train_overall_loss', 'train_value_loss', 'train_policy_loss'], loc='lower left')
 
-                        display.clear_output(wait=True)
-                        display.display(pl.gcf())
-                        pl.gcf().clear()
-                        time.sleep(1.0)
+		display.clear_output(wait=True)
+		display.display(pl.gcf())
+		pl.gcf().clear()
+		time.sleep(1.0)
 
 		print('\n')
 		self.model.printWeightAverages()
